@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { fetchNotes } from '../../services/noteService';
+import NoteForm from '../NoteForm/NoteForm';
 
 export default function App() {
   const [query, setQuery] = useState<string>('');
@@ -47,7 +48,11 @@ export default function App() {
         </button>
       </header>
       {isSuccess && data.notes.length > 0 && <NoteList notes={data.notes} />}
-      {isCreateNote && <Modal onClose={handleClose} />}
+      {isCreateNote && (
+      <Modal onClose={handleClose}>
+      <NoteForm onClose={handleClose} />
+      </Modal>
+)}
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
     </div>
